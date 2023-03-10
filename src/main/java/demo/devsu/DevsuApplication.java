@@ -56,8 +56,10 @@ public class DevsuApplication {
 			clienteRepo.save(clienteFinal3);
 
 			Cuenta cuenta1 = cuentaRepo.save(new Cuenta("1111", TipoCuenta.AHORRO,true,5000,clienteFinal));
+			Cuenta cuenta4 = cuentaRepo.save(new Cuenta("4444",TipoCuenta.CORRIENTE,true,10000,clienteFinal));
 			Cuenta cuenta2 = cuentaRepo.save(new Cuenta("2222",TipoCuenta.CORRIENTE,true,10000,clienteFinal2));
 			Cuenta cuenta3 = cuentaRepo.save(new Cuenta("3333",TipoCuenta.AHORRO,true,5000,clienteFinal3));
+
 			cuentaRepo.save(cuenta1);
 			cuentaRepo.save(cuenta2);
 			cuentaRepo.save(cuenta3);

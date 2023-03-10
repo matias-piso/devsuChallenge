@@ -1,11 +1,42 @@
 package demo.devsu.controllers;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import demo.devsu.dto.ReporteDto2;
+import demo.devsu.repositories.ClienteRepo;
+import demo.devsu.repositories.CuentaRepo;
+import demo.devsu.services.ReporteService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+
 
 @RestController
 @RequestMapping("/reportes")
 public class ReportesController {
+
+    @Autowired
+    private CuentaRepo cuentaRepository;
+
+    @Autowired
+    private ReporteService reporteService;
+
+    @Autowired
+    private ClienteRepo clienteRepository;
+
+    @PostMapping("/{id}")
+    public ResponseEntity<Long> estadoDeCuenta(@PathVariable Integer id,
+                                                  @RequestBody ReporteDto2 reporte) {
+
+        LocalDate fecha1 = reporte.getFechaInicial();
+        LocalDate fecha2 = reporte.getFechaFinal();
+
+        return new ResponseEntity(reporteService.estadoDeCuenta(id, fecha1, fecha2), HttpStatus.OK);
+    }
+
+
+
 
     //devolver json con todas las cuentas de un cliente
 

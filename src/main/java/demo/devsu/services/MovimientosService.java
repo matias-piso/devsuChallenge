@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class MovimientosService {
@@ -102,6 +101,7 @@ public class MovimientosService {
     
                 return (1000 - totalDiario) >= valor;
             }
+
 
     
     }

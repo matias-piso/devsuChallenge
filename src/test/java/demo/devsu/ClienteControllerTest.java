@@ -1,23 +1,15 @@
 package demo.devsu;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import demo.devsu.dto.ClienteDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static net.bytebuddy.matcher.ElementMatchers.is;
 import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest //permite levantar el contexto de spring, para poder usar los servicios.
@@ -33,6 +25,7 @@ public class ClienteControllerTest {
                         .andExpect(status().isNotFound());
         }
 
+        //a continuacion el siguiente test se encarga de verificar que el cliente exista
         @Test
         public void testGetAllClientes() throws Exception {
                 mockMvc.perform(MockMvcRequestBuilders.get("/clientes"))

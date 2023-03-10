@@ -24,6 +24,9 @@ public class Cliente extends Persistencia{
     @JoinColumn(name = "cliente_id", referencedColumnName = "id", nullable = false)
     private Persona persona;
 
+    //la siguiente relacion se utiliza para resolver el servicio de reportes
+    @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
+    private List<Cuenta> cuentas;
 
     //constrcutor para el test unitario
     public Cliente(String nombre, String direccion, String telefono, String contrasenia, boolean estadoCliente, Persona persona) {
