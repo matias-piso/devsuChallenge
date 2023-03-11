@@ -43,7 +43,6 @@ public class ClienteService {
     }
 
 
-    //delete cliente tiene que darle una baja logica
     public void deleteCliente(Integer id) {
         Cliente cliente = clienteRepository.findById(id).get();
 
