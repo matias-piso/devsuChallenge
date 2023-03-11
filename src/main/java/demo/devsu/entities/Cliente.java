@@ -1,9 +1,10 @@
 package demo.devsu.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.util.List;
+
 
 @Entity
 @Table(name = "clientes")
@@ -25,9 +26,11 @@ public class Cliente extends Persistencia{
     private Persona persona;
 
     //la siguiente relacion se utiliza para resolver el servicio de reportes
+    @JsonManagedReference
     @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
-    private List<Cuenta> cuentas;
+   private List<Cuenta> cuentas;
 
+  
     //constrcutor para el test unitario
     public Cliente(String nombre, String direccion, String telefono, String contrasenia, boolean estadoCliente, Persona persona) {
         this.contrasenia = contrasenia;
@@ -43,10 +46,6 @@ public class Cliente extends Persistencia{
 
     public void setEstado(boolean b) {
         this.estadoCliente = b; 
-    }
-    
-    public boolean perteneceAPersona(Persona persona) {
-        return this.persona.equals(persona);
     }
 }
 

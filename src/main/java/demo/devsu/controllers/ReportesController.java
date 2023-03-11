@@ -1,6 +1,6 @@
 package demo.devsu.controllers;
 
-import demo.devsu.dto.ReporteDto2;
+import demo.devsu.dto.ReporteDto;
 import demo.devsu.repositories.ClienteRepo;
 import demo.devsu.repositories.CuentaRepo;
 import demo.devsu.services.ReporteService;
@@ -27,25 +27,36 @@ public class ReportesController {
 
     @PostMapping("/{id}")
     public ResponseEntity<Long> estadoDeCuenta(@PathVariable Integer id,
-                                                  @RequestBody ReporteDto2 reporte) {
+                                               @RequestBody ReporteDto reporte){
+        try{
+            LocalDate fecha1 = reporte.getFechaInicial();
+            LocalDate fecha2 = reporte.getFechaFinal();
 
-        LocalDate fecha1 = reporte.getFechaInicial();
-        LocalDate fecha2 = reporte.getFechaFinal();
+            System.out.println(reporteService.estadoDeCuenta(id, fecha1, fecha2));
+            return new ResponseEntity(reporteService.estadoDeCuenta(id, fecha1, fecha2), HttpStatus.OK);
+            //return new ResponseEntity(reporteService.estadoDeCuenta(id, fecha1, fecha2), HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+    //http://localhost:8081/reportes/1?fechaInicial=2016-03-01&fechaFinal=2023-03-11
+    @GetMapping("/{id}")
+    public ResponseEntity<ReporteDto> estadoDeCuenta(@PathVariable Integer id,
+                                      @RequestParam(name = "fechaInicial", required = true) LocalDate fechaInicial,
+                                      @RequestParam(name = "fechaFinal", required = true) LocalDate fechaFinal) {
 
-        return new ResponseEntity(reporteService.estadoDeCuenta(id, fecha1, fecha2), HttpStatus.OK);
+      try{
+                //LocalDate fecha1 = reporte.getFechaInicial();
+                //LocalDate fecha2 = reporte.getFechaFinal();
+        return new ResponseEntity(reporteService.estadoDeCuenta(id, fechaInicial, fechaFinal), HttpStatus.OK);
+
+                //return new ResponseEntity(reporteService.estadoDeCuenta(id, fecha1, fecha2), HttpStatus.OK);
+        }catch(Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
     }
 
-
-
-
-    //devolver json con todas las cuentas de un cliente
-
-    //con el total de los debitos de todos los movimientos de cada cuenta
-
-    //con el total de los creditos de todos los movimientos de cada cuenta
-
-    //hay que pasar un id de cliente por body y tiene que hacer el cruce de datos con las cuentas y los movimientos
-    //haciendo una query para dicha consulta
 }
 
 

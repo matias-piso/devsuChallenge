@@ -11,9 +11,4 @@ import lombok.Setter;
 public class PersonaDto {
 
     private String nombre;
-    
-
-    public String getNombre() {
-        return nombre;
-    }
 }

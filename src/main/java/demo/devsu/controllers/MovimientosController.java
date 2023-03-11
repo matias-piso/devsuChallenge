@@ -1,7 +1,7 @@
 
 package demo.devsu.controllers;
 
-import demo.devsu.entities.Cuenta;
+import demo.devsu.dto.MovimientosDto;
 import demo.devsu.entities.Movimiento;
 import demo.devsu.repositories.MovimientosRepo;
 import demo.devsu.services.CuentaService;
@@ -35,6 +35,46 @@ public class MovimientosController {
             return new ResponseEntity<>(movimientos, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping({"/", ""})
+    public ResponseEntity<String> crearMovimiento(@RequestBody MovimientosDto movimiento) {
+        try {
+            movimientoService.crearMovimiento(movimiento);
+            return new ResponseEntity<>("Creado", HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @DeleteMapping({"/{id}"})
+    public ResponseEntity<String> eliminarMovimiento(@PathVariable("id") Integer id) {
+        try {
+            movimientoService.eliminarMovimiento(id);
+            return new ResponseEntity<>("Eliminado", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    @PutMapping({"/{id}"})
+    public ResponseEntity<String> actualizarMovimiento(@PathVariable("id") Integer id, @RequestBody MovimientosDto movimiento) {
+        try {
+            movimientoService.actualizarMovimiento(id, movimiento);
+            return new ResponseEntity<>("Actualizado", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    @PatchMapping({"/{id}"})
+    public ResponseEntity<String> actualizarMovimientoParcial(@PathVariable("id") Integer id, @RequestBody MovimientosDto movimiento) {
+        try {
+            movimientoService.actualizarMovimientoParcial(id, movimiento);
+            return new ResponseEntity<>("Actualizado", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 

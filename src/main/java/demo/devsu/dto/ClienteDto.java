@@ -1,5 +1,6 @@
 package demo.devsu.dto;
 
+import demo.devsu.entities.enums.Generos;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,8 +11,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ClienteDto {
-    private Integer id;
+
     private String nombre;
+    private Generos genero;
+    private Integer edad;
+    private String identificacion;
     private String direccion;
     private String telefono;
     private String contrasenia;
@@ -21,7 +25,19 @@ public class ClienteDto {
         return estado;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+
 }
+
+/*
+    {
+     "nombre": "string",
+     "genero": "MASCULINO",
+     "edad": 0,
+     "identificacion": "string",
+     "direccion": "string",
+     "telefono": "string",
+     "contrasenia": "string",
+     "estado": true
+    }
+
+*/

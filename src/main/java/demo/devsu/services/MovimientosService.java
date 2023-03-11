@@ -1,4 +1,3 @@
-
 package demo.devsu.services;
 
 import demo.devsu.dto.MovimientosDto;
@@ -7,11 +6,11 @@ import demo.devsu.entities.enums.TipoMovimiento;
 import demo.devsu.entities.Movimiento;
 import demo.devsu.repositories.CuentaRepo;
 import demo.devsu.repositories.MovimientosRepo;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
-import java.util.List;
+
 
 @Service
 public class MovimientosService {
@@ -46,7 +45,7 @@ public class MovimientosService {
                 cuenta.setSaldoInicial(total);
     
                 // Creamos un nuevo movimiento y lo guardamos
-                Movimiento movimientoNuevo = new Movimiento(LocalDate.now(), tipoMovimiento.CREDITO, movimiento.getValor(), total, cuenta);
+                Movimiento movimientoNuevo = new Movimiento(LocalDate.now(), tipoMovimiento.CREDITO, movimiento.getValor(), true, total, cuenta);
     
                 movimientosRepository.save(movimientoNuevo);
     
@@ -64,7 +63,7 @@ public class MovimientosService {
     
                         // Si el retiro es válido, actualizamos el saldo de la cuenta restando el valor del movimiento y guardo el movimiento realizado
                         cuenta.setSaldoInicial(cuenta.getSaldoInicial() - movimiento.getValor());
-                        Movimiento movimientoNuevo = new Movimiento(LocalDate.now(), tipoMovimiento.DEBITO, movimiento.getValor(), cuenta.getSaldoInicial(), cuenta);
+                        Movimiento movimientoNuevo = new Movimiento(LocalDate.now(), tipoMovimiento.DEBITO, movimiento.getValor(), true, cuenta.getSaldoInicial(), cuenta);
     
                         movimientosRepository.save(movimientoNuevo);
                         cuenta.addMovimiento(movimientoNuevo);  // Guardamos la cuenta
@@ -87,21 +86,56 @@ public class MovimientosService {
                     throw new IllegalArgumentException("Tipo de movimiento no válido");
                 } 
             }
-    
-    
-            public List<Cuenta> obtenerMovimientos() {
-                return cuentaRepository.findAll();
-            }
-    
-            private boolean verificarLimiteDiario (Cuenta cuenta,int valor){
-                Integer totalDiario = cuenta.getMovimientos().stream()
-                        .filter(mov -> (mov.getFecha().equals(LocalDate.now())) && (mov.getTipoMovimiento().equals(TipoMovimiento.DEBITO)))
-                        .map(Movimiento::getValor)
-                        .reduce(0, Integer::sum);
-    
-                return (1000 - totalDiario) >= valor;
-            }
+            
 
+  
+    private boolean verificarLimiteDiario (Cuenta cuenta,int valor){
+        Integer totalDiario = cuenta.getMovimientos().stream()
+                .filter(mov -> (mov.getFecha().equals(LocalDate.now())) && (mov.getTipoMovimiento().equals(TipoMovimiento.DEBITO)))
+                .map(Movimiento::getValor)
+                .reduce(0, Integer::sum);
 
-    
+        return (1000 - totalDiario) >= valor;
     }
+    
+     //delete cliente tiene que darle una baja logica
+    @Transactional
+    public void eliminarMovimiento(Integer id) {
+        Movimiento movimiento = movimientosRepository.findById(id).get();
+    
+        if (movimiento == null) {
+                throw new IllegalArgumentException("No existe la cuenta");
+         }
+    
+         movimiento.setEstado(false);
+      }
+
+
+    @Transactional
+    public void actualizarMovimiento(Integer id, MovimientosDto movimiento) {
+        Movimiento movimientoActualizado = movimientosRepository.findById(id).get();
+
+        if (movimientoActualizado == null) {
+            throw new IllegalArgumentException("No existe la cuenta");
+        }
+
+        movimientoActualizado.setValor(movimiento.getValor());
+        movimientoActualizado.setTipoMovimiento(movimiento.getTipoDeMovimiento());
+        movimientoActualizado.setFecha(movimiento.getFecha());
+        movimientoActualizado.setEstado(movimiento.getEstado());
+        movimientoActualizado.setSaldo(movimiento.getSaldo());
+
+      }
+      
+      @Transactional
+          public void actualizarMovimientoParcial(Integer id, MovimientosDto movimiento) {
+              Movimiento movimientoActualizado = movimientosRepository.findById(id).get();
+      
+              if (movimientoActualizado == null) {
+                  throw new IllegalArgumentException("No existe la cuenta");
+              }
+      
+              movimientoActualizado.setValor(movimiento.getValor());
+      
+            }
+}

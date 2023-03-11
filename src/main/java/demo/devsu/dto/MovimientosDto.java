@@ -1,9 +1,12 @@
 package demo.devsu.dto;
 
+import demo.devsu.entities.enums.TipoMovimiento;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -11,12 +14,16 @@ import lombok.Setter;
 @AllArgsConstructor
 public class MovimientosDto {
         
-        private String fecha;
-        private String tipoDeMovimiento;
+        private LocalDate fecha;
+        private TipoMovimiento tipoDeMovimiento;
         private int valor;
         private int saldo;
+        private boolean estado;
         private Integer cuentaId;
-    
+
+        public boolean getEstado() {
+                return estado;
+        }
 }
 
 /*

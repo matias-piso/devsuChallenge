@@ -3,7 +3,7 @@ package demo.devsu.entities.enums;
 public enum TipoMovimiento {
     CREDITO,
     DEBITO;
-
+/*
     public static TipoMovimiento getTipoMovimiento(String tipoMovimiento) {
         if (tipoMovimiento.equals("CREDITO")) {
             return CREDITO;
@@ -12,11 +12,5 @@ public enum TipoMovimiento {
         }
         return null;
     }
-    
-    public boolean equalsIgnoreCase(String debito) {
-        if (this.name().equalsIgnoreCase(debito)) {
-            return true;
-        }
-        return false;
-    }
+    */
 }

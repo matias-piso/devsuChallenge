@@ -4,6 +4,7 @@ public enum TipoCuenta {
     AHORRO,
     CORRIENTE;
     
+    /*
     public static TipoCuenta getTipoCuenta(String tipoCuenta) {
         if (tipoCuenta.equals("AHORRO")) {
             return AHORRO;
@@ -12,4 +13,5 @@ public enum TipoCuenta {
         }
         return null;
     }
+    */
 }

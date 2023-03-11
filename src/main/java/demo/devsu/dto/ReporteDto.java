@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -19,6 +21,8 @@ public class ReporteDto {
     private Long totalCredito;
 
     private List<Cuenta> cuentas;
-    
-    
+
+    private LocalDate fechaInicial;
+
+    private LocalDate fechaFinal;
 }

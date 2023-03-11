@@ -3,7 +3,6 @@ package demo.devsu;
 import demo.devsu.entities.*;
 import demo.devsu.entities.enums.Generos;
 import demo.devsu.entities.enums.TipoCuenta;
-import demo.devsu.entities.enums.TipoMovimiento;
 import demo.devsu.repositories.ClienteRepo;
 import demo.devsu.repositories.CuentaRepo;
 import demo.devsu.repositories.MovimientosRepo;
@@ -14,7 +13,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import java.time.LocalDate;
 
 @SpringBootApplication
 public class DevsuApplication {
@@ -63,14 +61,7 @@ public class DevsuApplication {
 			cuentaRepo.save(cuenta1);
 			cuentaRepo.save(cuenta2);
 			cuentaRepo.save(cuenta3);
-
-
-			//Movimiento movimiento1 = movimientoRepo.save(new Movimiento(LocalDate.now(), TipoMovimiento.DEBITO,0,4000,cuenta1));
-			//Movimiento movimiento2 = movimientoRepo.save(new Movimiento(LocalDate.now(),TipoMovimiento.CREDITO,0,6000,cuenta2));
-			//Movimiento movimiento3 = movimientoRepo.save(new Movimiento(LocalDate.now(),TipoMovimiento.DEBITO,0,9000,cuenta3));
-			//movimientoRepo.save(movimiento1);
-			//movimientoRepo.save(movimiento2);
-			//movimientoRepo.save(movimiento3);
+			
 
 		};
 	}

@@ -3,17 +3,13 @@ package demo.devsu.entities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import demo.devsu.converters.LocalDateConverter;
 import demo.devsu.entities.enums.TipoMovimiento;
-import demo.devsu.repositories.MovimientosRepo;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Scanner;
+
 
 @Entity
 @Table(name = "movimiento")
@@ -30,6 +26,10 @@ public class Movimiento extends Persistencia{
     @NonNull
     @Enumerated(EnumType.STRING)
     private TipoMovimiento tipoMovimiento;
+
+    @Column(name="estado")
+    @NonNull
+    private boolean estado;
 
     @Column(name="valor")
     @NonNull
@@ -48,23 +48,22 @@ public class Movimiento extends Persistencia{
 
 
     //constructores
-    public Movimiento(LocalDate fecha, TipoMovimiento tipoMovimiento, int valor, int saldo, Cuenta cuenta) {
+    public Movimiento(LocalDate fecha, TipoMovimiento tipoMovimiento, int valor, boolean estado, int saldo, Cuenta cuenta) {
         this.fecha = fecha;
         this.tipoMovimiento = tipoMovimiento;
         this.valor = valor;
+        this.estado = estado;
         this.saldo = saldo;
         this.cuenta = cuenta;
     }
     
-    public Movimiento(LocalDate fecha, TipoMovimiento tipoMovimiento, int valor, int saldo) {
+    public Movimiento(LocalDate fecha, TipoMovimiento tipoMovimiento, int valor, int saldo, boolean estado) {
             this.fecha = fecha;
             this.tipoMovimiento = tipoMovimiento;
             this.valor = valor;
             this.saldo = saldo;
+            this.estado = estado;
         }
 
 
-    public Integer getClienteId() {
-        return cuenta.getCliente().getId();
-    }
 }
